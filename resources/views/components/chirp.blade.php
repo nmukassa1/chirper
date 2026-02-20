@@ -23,18 +23,18 @@
             @endif
 
             <div class="min-w-0">
+                <div class="flex items-center gap-1">
+                    <span class="text-sm font-semibold">{{ $chirp->user ? $chirp->user->name : 'Anonymous' }}</span>
+                    <span class="text-sm">{{ $chirp->user ? $chirp->user->email : 'Anonymous' }}</span>
+                    <span class="text-base-content/60">·</span>
+                    <span class="text-sm text-base-content/60">{{ $chirp->created_at->diffForHumans() }}</span>
+                    @if ($chirp->updated_at->gt($chirp->created_at->addSeconds(5)))
+                    <span class="text-base-content/60">·</span>
+                    <span class="text-sm text-base-content/60 italic">edited</span>
+                    @endif
+                </div>
+                
                 @can('update', $chirp) {{-- can method used since we have a policy created --}}
-                    <div class="flex items-center gap-1">
-                        <span class="text-sm font-semibold">{{ $chirp->user ? $chirp->user->name : 'Anonymous' }}</span>
-                        <span class="text-sm">{{ $chirp->user ? $chirp->user->email : 'Anonymous' }}</span>
-                        <span class="text-base-content/60">·</span>
-                        <span class="text-sm text-base-content/60">{{ $chirp->created_at->diffForHumans() }}</span>
-                        @if ($chirp->updated_at->gt($chirp->created_at->addSeconds(5)))
-                            <span class="text-base-content/60">·</span>
-                            <span class="text-sm text-base-content/60 italic">edited</span>
-                        @endif
-                    </div>
-
                     <div class="flex gap-1">
                         <a href="/chirps/{{ $chirp->id }}/edit" class="btn btn-ghost btn-xs">
                             Edit
